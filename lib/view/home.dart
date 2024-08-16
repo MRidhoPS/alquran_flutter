@@ -44,8 +44,12 @@ class HomePage extends StatelessWidget {
                             final surahId = surah.nomor;
                             return DetailSurahBloc(Dio())
                               ..add(FetchSurahDetail(surahId));
-                                                    },
-                          child: DetailSurahPage(surahId: surah.nomor,),
+                          },
+                          child: DetailSurahPage(
+                              nama: surah.nama,
+                              namaLatin: surah.namaLatin,
+                              artiSurat: surah.arti,
+                              jumlahAyat: surah.jumlahAyat),
                         ),
                       ),
                     );
