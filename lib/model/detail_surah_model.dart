@@ -41,7 +41,7 @@ class SurahDataRes {
     required this.deskripsi,
     required this.audioFull,
     required this.ayat,
-    this.suratSelanjutnya,
+     this.suratSelanjutnya,
     this.suratSebelumnya,
   });
 
@@ -60,6 +60,9 @@ class SurahDataRes {
           ? SuratSelanjutnya.fromJson(json['suratSelanjutnya'])
           : null,
       suratSebelumnya: json['suratSebelumnya'], // Bisa berupa bool atau null
+      // suratSebelumnya: json['suratSebelumnya'] != false
+      //     ? SuratSebelumnya.fromJson(json['suratSebelumnya'])
+      //     : false,
     );
   }
 }
@@ -105,6 +108,28 @@ class SuratSelanjutnya {
 
   factory SuratSelanjutnya.fromJson(Map<String, dynamic> json) {
     return SuratSelanjutnya(
+      nomor: json['nomor'],
+      nama: json['nama'],
+      namaLatin: json['namaLatin'],
+      jumlahAyat: json['jumlahAyat'],
+    );
+  }
+}
+
+class SuratSebelumnya {
+  final int nomor;
+  final String nama;
+  final String namaLatin;
+  final int jumlahAyat;
+
+  SuratSebelumnya({
+    required this.nomor,
+    required this.nama,
+    required this.namaLatin,
+    required this.jumlahAyat,
+  });
+  factory SuratSebelumnya.fromJson(Map<String, dynamic> json) {
+    return SuratSebelumnya(
       nomor: json['nomor'],
       nama: json['nama'],
       namaLatin: json['namaLatin'],

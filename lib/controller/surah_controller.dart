@@ -19,8 +19,7 @@ class SurahServices{
 
     } on DioException catch (e) {
       // Handle Dio-specific exceptions
-      print('Dio error: ${e.message}');
-      throw Exception('Failed to load surah');
+      throw Exception('Failed to load surah: ${e.message}');
     }
   }
 
@@ -34,8 +33,7 @@ class SurahServices{
       }
     } on DioException catch (e) {
       // Handle Dio-specific exceptions
-      print('Dio error: ${e.message}');
-      throw Exception('Salah di api');
+      throw Exception('Salah di api: ${e.message}');
     }
   }
 

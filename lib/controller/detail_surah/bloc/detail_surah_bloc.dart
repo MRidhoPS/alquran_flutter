@@ -19,7 +19,6 @@ class DetailSurahBloc extends Bloc<DetailSurahEvent, DetailSurahState> {
     emit(DetailSurahLoading());
     try {
       final res = await SurahServices().getDetailSurah(event.surahId);
-      print('Response: $res');
       emit(DetailSurahLoaded(res));
     } catch (e) {
       emit(DetailSurahError('Salah di bloc: ${e.toString()}'));

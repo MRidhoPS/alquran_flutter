@@ -45,11 +45,8 @@ class HomePage extends StatelessWidget {
                             return DetailSurahBloc(Dio())
                               ..add(FetchSurahDetail(surahId));
                           },
-                          child: DetailSurahPage(
-                              nama: surah.nama,
-                              namaLatin: surah.namaLatin,
-                              artiSurat: surah.arti,
-                              jumlahAyat: surah.jumlahAyat),
+                          child: const DetailSurahPage(
+                             ),
                         ),
                       ),
                     );
