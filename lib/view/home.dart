@@ -32,8 +32,8 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  title: Text(surah.nama),
-                  subtitle: Text('${surah.namaLatin} / ${surah.arti}'),
+                  title: Text(surah.namaLatin, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600),),
+                  subtitle: Text(surah.arti),
                   trailing: Text('${surah.jumlahAyat} Ayahs'),
                   onTap: () {
                     Navigator.push(

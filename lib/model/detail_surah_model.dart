@@ -28,7 +28,7 @@ class SurahDataRes {
   final String deskripsi;
   final Map<String, String> audioFull;
   final List<Ayat> ayat;
-  final SuratSelanjutnya? suratSelanjutnya;
+  final dynamic suratSelanjutnya;
   final dynamic suratSebelumnya;
 
   SurahDataRes({
@@ -56,14 +56,20 @@ class SurahDataRes {
       deskripsi: json['deskripsi'],
       audioFull: Map<String, String>.from(json['audioFull']),
       ayat: (json['ayat'] as List).map((item) => Ayat.fromJson(item)).toList(),
-      suratSelanjutnya: json['suratSelanjutnya'] != null
-          ? SuratSelanjutnya.fromJson(json['suratSelanjutnya'])
-          : null,
-      suratSebelumnya: json['suratSebelumnya'], // Bisa berupa bool atau null
-      // suratSebelumnya: json['suratSebelumnya'] != false
-      //     ? SuratSebelumnya.fromJson(json['suratSebelumnya'])
-      //     : false,
+      suratSelanjutnya: _parseSuratSelanjutnya(json['suratSelanjutnya']),
+      suratSebelumnya: _parseSuratSelanjutnya(json['suratSebelumnya']),
     );
+  }
+
+
+  static dynamic _parseSuratSelanjutnya(dynamic field) {
+    if (field is Map<String, dynamic>) {
+      return SuratSelanjutnya.fromJson(field);
+    } else if (field is bool) {
+      return field;
+    } else {
+      return null;
+    }
   }
 }
 
