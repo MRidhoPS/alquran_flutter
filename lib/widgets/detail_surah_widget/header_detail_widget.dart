@@ -27,18 +27,17 @@ class HeaderDetailSurah extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height / 5,
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Colors.purple.shade300,
+                      Colors.blue.shade300,
+                    ],
+                  ),
                   borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(15),
                       bottomRight: Radius.circular(15)),
-                  boxShadow: [
-                    BoxShadow(
-                        color: Colors.grey.shade200,
-                        spreadRadius: 2,
-                        offset: const Offset(4, 6),
-                        blurRadius: 4,
-                        blurStyle: BlurStyle.normal)
-                  ],
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -51,11 +50,14 @@ class HeaderDetailSurah extends StatelessWidget {
                           onPressed: () {
                             Navigation().backHome(context);
                           },
-                          icon: const Icon(Icons.arrow_back_ios_new_rounded),
+                          icon: const Icon(
+                            Icons.arrow_back_ios_new_rounded,
+                            color: Colors.white,
+                          ),
                         ),
                         TextWidget(
                           data: detail.nama,
-                          textColor: Colors.black,
+                          textColor: Colors.white,
                           fontSize: 30,
                           fontWeight: FontWeight.w700,
                         ),
@@ -63,13 +65,13 @@ class HeaderDetailSurah extends StatelessWidget {
                     ),
                     TextWidget(
                       data: '${detail.namaLatin} / ${detail.arti}',
-                      textColor: Colors.black.withOpacity(0.5),
+                      textColor: Colors.white.withOpacity(0.9),
                       fontSize: 24,
                       fontWeight: FontWeight.w400,
                     ),
                     TextWidget(
                       data: '${detail.jumlahAyat} Ayat',
-                      textColor: Colors.black.withOpacity(0.5),
+                      textColor: Colors.white.withOpacity(0.9),
                       fontSize: 24,
                       fontWeight: FontWeight.w400,
                     ),

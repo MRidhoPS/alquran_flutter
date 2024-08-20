@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 
 class TextRIchWidget extends StatelessWidget {
   const TextRIchWidget({
@@ -26,6 +26,7 @@ class TextRIchWidget extends StatelessWidget {
       overflow: overflow,
       textAlign: textAlign,
       style: TextStyle(
+        color: Colors.white,
         fontSize: fontSize,
         fontWeight: fontWeight,
       ),

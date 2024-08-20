@@ -32,19 +32,17 @@ class NextSurahContainer extends StatelessWidget {
                       const EdgeInsets.only(right: 20, top: 10, bottom: 10),
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        Colors.purple.shade300,
+                        Colors.blue.shade300,
+                      ],
+                    ),
                     borderRadius: const BorderRadius.only(
                         bottomLeft: Radius.circular(15),
                         bottomRight: Radius.circular(15)),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.shade200,
-                        spreadRadius: 2,
-                        offset: const Offset(4, 6),
-                        blurRadius: 4,
-                        blurStyle: BlurStyle.normal,
-                      ),
-                    ],
                   ),
                   child: Padding(
                     padding: const EdgeInsets.only(left: 20),
@@ -57,7 +55,7 @@ class NextSurahContainer extends StatelessWidget {
                           children: [
                             TextWidget(
                               data: "Next Surah: ${nextSurah.namaLatin}",
-                              textColor: Colors.black,
+                              textColor: Colors.white,
                               fontSize: 24,
                               fontWeight: FontWeight.w700,
                             ),
@@ -68,19 +66,20 @@ class NextSurahContainer extends StatelessWidget {
                               icon: const Icon(
                                 Icons.keyboard_arrow_right_sharp,
                                 size: 30,
+                                color: Colors.white,
                               ),
                             ),
                           ],
                         ),
                         TextWidget(
                           data: "Surah ke: ${nextSurah.nomor}",
-                          textColor: Colors.black.withOpacity(0.5),
+                          textColor: Colors.white.withOpacity(0.9),
                           fontSize: 18,
                           fontWeight: FontWeight.w400,
                         ),
                         TextWidget(
                           data: '${detail.jumlahAyat} Ayat',
-                          textColor: Colors.black.withOpacity(0.5),
+                          textColor: Colors.white.withOpacity(0.9),
                           fontSize: 18,
                           fontWeight: FontWeight.w400,
                         ),

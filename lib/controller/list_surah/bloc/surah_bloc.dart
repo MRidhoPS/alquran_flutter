@@ -7,7 +7,6 @@ part 'surah_event.dart';
 part 'surah_state.dart';
 
 class SurahBloc extends Bloc<SurahEvent, SurahState> {
-  // final SurahServices surahServices;
 
   SurahBloc() : super(SurahInitial()) {
     on<FetchSurahList>(_onFetchSurahList);
