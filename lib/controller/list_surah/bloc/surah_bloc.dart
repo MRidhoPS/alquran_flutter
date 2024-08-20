@@ -7,9 +7,9 @@ part 'surah_event.dart';
 part 'surah_state.dart';
 
 class SurahBloc extends Bloc<SurahEvent, SurahState> {
-  final SurahServices surahServices;
+  // final SurahServices surahServices;
 
-  SurahBloc(this.surahServices) : super(SurahInitial()) {
+  SurahBloc() : super(SurahInitial()) {
     on<FetchSurahList>(_onFetchSurahList);
   }
 
@@ -18,7 +18,7 @@ class SurahBloc extends Bloc<SurahEvent, SurahState> {
     emit(SurahLoading());
 
     try {
-      final surahRes = await surahServices.getListSurah();
+      final surahRes = await SurahServices().getListSurah();
       emit(SurahLoaded(surahRes));
     } catch (e) {
       emit(SurahError(e.toString()));
