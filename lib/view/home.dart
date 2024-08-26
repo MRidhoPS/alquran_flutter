@@ -4,6 +4,7 @@ import 'package:al_quran_app/route/navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
+import 'package:shimmer/shimmer.dart';
 import '../widgets/text_widget.dart';
 
 class HomePage extends StatelessWidget {
@@ -11,103 +12,137 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       backgroundColor: Colors.black54,
-      body: Column(
-        children: [
-          SafeArea(child: HeaderHome()),
-          ListSurahContainer(),
-        ],
+      body: SafeArea(
+        child: CustomScrollView(
+          scrollDirection: Axis.vertical,
+          slivers: [
+            const SliverToBoxAdapter(
+              child: HomeHeader(),
+            ),
+            const SliverToBoxAdapter(
+              child: SizedBox(
+                height: 20,
+              ), // Add spacing between the header and list
+            ),
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (context, index) => const ListSurahContainer(),
+                childCount: 1,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
 
-class HeaderHome extends StatelessWidget {
-  const HeaderHome({
+class HomeHeader extends StatelessWidget {
+  const HomeHeader({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.only(top: 50, left: 20),
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height / 6,
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.only(
-          bottomLeft: Radius.circular(20),
-          bottomRight: Radius.circular(20),
-        ),
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            Colors.purple.shade300,
-            Colors.blue.shade300,
-          ],
-        ),
-      ),
-      child: const TextWidget(
-          data: 'Quran App',
-          textColor: Colors.white,
-          fontSize: 40,
-          fontWeight: FontWeight.bold),
+    return BlocBuilder<SurahBloc, SurahState>(
+      builder: (context, state) {
+        if (state is SurahLoading) {
+          return Shimmer.fromColors(
+            baseColor: Colors.grey,
+            highlightColor: Colors.grey.shade100,
+            child: Container(
+              width: double.infinity,
+              height: MediaQuery.of(context).size.height / 4,
+              decoration: BoxDecoration(
+                color: Colors.grey.shade300,
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+            ),
+          );
+        } else if (state is SurahLoaded) {
+          return Image.asset(
+            'assets/images/banner.png',
+            fit: BoxFit.cover,
+          );
+        } else {
+          return const SizedBox();
+        }
+      },
     );
   }
 }
 
 class ListSurahContainer extends StatelessWidget {
-  const ListSurahContainer({
-    super.key,
-  });
+  const ListSurahContainer({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: BlocBuilder<SurahBloc, SurahState>(
-        builder: (context, state) {
-          if (state is SurahLoading) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (state is SurahLoaded) {
-            return ListView.builder(
-              itemCount: state.surahResponse.data.length,
+    return BlocBuilder<SurahBloc, SurahState>(
+      builder: (context, state) {
+        if (state is SurahLoading) {
+          return SizedBox(
+            height: MediaQuery.of(context).size.height,
+            child: ListView.builder(
               itemBuilder: (context, index) {
-                final surah = state.surahResponse.data[index];
-                return SurahInformation(surah: surah);
+                return Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                  child: Shimmer.fromColors(
+                    baseColor: Colors.grey,
+                    highlightColor: Colors.grey.shade100,
+                    child: Container(
+                      width: double.infinity,
+                      height: MediaQuery.of(context).size.height / 12,
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade300,
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
+                  ),
+                );
               },
-            );
-          } else if (state is SurahError) {
-            return Center(child: Text('Error: ${state.message}'));
-          } else {
-            return const Center(child: Text('No data'));
-          }
-        },
-      ),
+            ),
+          );
+        } else if (state is SurahLoaded) {
+          return ListView.builder(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: state.surahResponse.data.length,
+            itemBuilder: (context, index) {
+              final surah = state.surahResponse.data[index];
+              return SurahInformation(surah: surah);
+            },
+          );
+        } else if (state is SurahError) {
+          return Center(child: Text('Error: ${state.message}'));
+        } else {
+          return const Center(child: Text('No data'));
+        }
+      },
     );
   }
 }
 
 class SurahInformation extends StatelessWidget {
-  const SurahInformation({
-    super.key,
-    required this.surah,
-  });
+  const SurahInformation({super.key, required this.surah});
 
   final SurahData surah;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 10),
+      margin: const EdgeInsets.only(top: 10),
       decoration: BoxDecoration(
-        border: GradientBoxBorder(
+        border: const GradientBoxBorder(
           gradient: LinearGradient(
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
             colors: [
-              Colors.blue.shade300,
-              Colors.purple.shade300,
+              Color(0xFF64B5F6),
+              Color(0xFFBA68C8),
             ],
           ),
         ),
@@ -120,7 +155,6 @@ class SurahInformation extends StatelessWidget {
             Colors.white24,
             Colors.white10,
             Colors.white10,
-
           ],
         ),
       ),
